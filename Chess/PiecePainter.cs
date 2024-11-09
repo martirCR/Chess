@@ -12,42 +12,32 @@ namespace Chess
         /// <summary>
         /// The height of a single card image from the input files.
         /// </summary>
-        private const int _cardImageHeight = 333;
+        private const int _pieceImageHeight = 333;
 
         /// <summary>
         /// The width of a single card image from the input files.
         /// </summary>
-        private const int _cardImageWidth = 234;
+        private const int _pieceImageWidth = 234;
 
         /// <summary>
         /// The width, in pixels, of the line forming the highlight of a card.
         /// </summary>
-        private const int _highlightWidth = 2;
-
-        /// <summary>
-        /// The pen used to draw the box where the stock will be placed.
-        /// </summary>
-        private static readonly Pen _boxPen = new(Color.White);
+        private const int _highlightWidth = 2;        
 
         /// <summary>
         /// The height of a displayed card drawing.
         /// </summary>
-        public const int CardHeight = _cardImageHeight / 2;
+        public const int PieceHeight = _pieceImageHeight / 2;
 
         /// <summary>
         /// The width of a displayed card drawing.
         /// </summary>
-        public const int CardWidth = _cardImageWidth / 2;
-
-        /// <summary>
-        /// Gets the back of a card.
-        /// </summary>
-        public static Image CardBack { get; } = Images.Back;
+        public const int PieceWidth = _pieceImageWidth / 2;
 
         /// <summary>
         /// Gets the pen used to highlight selected cards.
         /// </summary>
-        public static Pen HighlightPen { get; } = new (Color.Magenta, _highlightWidth);
+        public static Pen HighlightPen { get; } = new Pen(Color.Magenta, _highlightWidth);
 
         /// <summary>
         /// Draws the back of a card on the given graphics context at the given location.

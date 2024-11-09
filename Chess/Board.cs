@@ -107,7 +107,7 @@ namespace Chess
 
 
                         }
-                    case 5:
+                    case 5://king
                     {
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
                         for (int i = 0; i < 1; i++)// 8 is the maximum number of spaces a piece can move
