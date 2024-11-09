@@ -18,14 +18,21 @@ namespace Chess
         /// <exception cref="NotImplementedException"></exception>
         public void MovePiece(/*Piece p*/)
         {
-            /* (int row, int col) = p.Move;
-             * if (IsValid(row, col))
+            /* switch (p.rank) {
+             * case 1:
              * {
-             *     _chessBoard[row,col] = p;
+             * 
+             *  break;
              * }
+             * case 2:
+             * {
+             * 
+             *  break;
+             * }
+             * case3;
+             *}
             */
-
-
+        
         }
 
 
@@ -38,6 +45,11 @@ namespace Chess
         {
             throw new NotImplementedException();
         }
+
+
+        
+
+    
 
 
        
