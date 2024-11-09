@@ -1,6 +1,6 @@
 ﻿namespace Chess
 {
-    public class Pawn
+    public class Piece
 
     {
         public bool IsWhite { get; }
