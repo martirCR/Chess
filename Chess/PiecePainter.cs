@@ -45,9 +45,10 @@ namespace Chess
         /// <param name="g">The graphics context on which to draw.</param>
         /// <param name="x">The x-coordinate of the upper-left corner.</param>
         /// <param name="y">The y-coordinate of the upper-left corner.</param>
-        public static void DrawBack(Graphics g, int x, int y)
+        /*public static void DrawBack(Graphics g, int x, int y)
         {
             g.DrawImage(CardBack, x, y, CardWidth, CardHeight);
         }
+        */
     }
 }

@@ -145,10 +145,11 @@ namespace Chess
         /// <exception cref="NotImplementedException"></exception>
         private bool IsValid(Piece p)
         {
-            if (p.Position.row > _boardLength || p.Position.col > _boardLength)
+            return false; //deleteme
+/*            if (p.Position.row > _boardLength || p.Position.col > _boardLength)
             {
 
-            }
+            }*/
         }
 
 
