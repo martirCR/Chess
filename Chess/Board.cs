@@ -14,23 +14,17 @@ namespace Chess
         /// <exception cref="NotImplementedException"></exception>
         public void MovePiece(Piece p)
         {
-            switch (p.rank)
+            int rank = p.Rank;
+            switch (rank)
             {
                 case 0:
                     {
-                        (int row, int col)[] _moves = new (int row, int col)[_numberOfMoves];
-                        public (int row, int col)[] ValidMove(Piece p)
-                        {
-                            if (rank == 0)
-                            {
-                                if (_start)
-                                {
-                                    moves[0] = (p.Position.row + 2, p.Position.col);
-                                }
-                                moves[1] = (p.Position.row + 1, p.Position.col);
-                                moves[2] = (p.Position.row + 1, p.Position.col - 1);
-                            }
+                        //if (_start)
+                        //{
+                        /*    moves[0] = (p.Position.row + 2, p.Position.col);
                         }
+                        moves[1] = (p.Position.row + 1, p.Position.col);
+                        moves[2] = (p.Position.row + 1, p.Position.col - 1);*/
                         break;
                     }
                 case 1:
@@ -54,9 +48,12 @@ namespace Chess
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private bool IsValid()
+        private bool IsValid(Piece p)
         {
-            throw new NotImplementedException();
+            if (p.Position.row > _boardLength || p.Position.col > _boardLength)
+            {
+
+            }
         }
 
 
