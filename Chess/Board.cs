@@ -18,7 +18,12 @@ namespace Chess
         /// <exception cref="NotImplementedException"></exception>
         public void MovePiece(/*Piece p*/)
         {
-            throw new NotImplementedException();
+            /* (int row, int col) = p.Move;
+             * if (IsValid(row, col))
+             * {
+             *     _chessBoard[row,col] = p;
+             * }
+            */
 
 
         }
