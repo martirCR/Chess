@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess
 {
@@ -16,23 +12,40 @@ namespace Chess
         /// Moves pece
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        public void MovePiece(/*Piece p*/)
+        public void MovePiece(Piece p)
         {
-            /* switch (p.rank) {
-             * case 1:
-             * {
-             * 
-             *  break;
-             * }
-             * case 2:
-             * {
-             * 
-             *  break;
-             * }
-             * case3;
-             *}
-            */
-        
+            switch (p.rank)
+            {
+                case 0:
+                    {
+                        (int row, int col)[] _moves = new (int row, int col)[_numberOfMoves];
+                        public (int row, int col)[] ValidMove(Piece p)
+                        {
+                            if (rank == 0)
+                            {
+                                if (_start)
+                                {
+                                    moves[0] = (p.Position.row + 2, p.Position.col);
+                                }
+                                moves[1] = (p.Position.row + 1, p.Position.col);
+                                moves[2] = (p.Position.row + 1, p.Position.col - 1);
+                            }
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+
+                        break;
+                    }
+                case 2:
+                    {
+
+                        break;
+                    }
+            }
+
+
         }
 
 
@@ -47,11 +60,11 @@ namespace Chess
         }
 
 
-        
-
-    
 
 
-       
+
+
+
+
     }
 }
