@@ -7,14 +7,82 @@ namespace Chess
     {
         private const int _boardLength = 8;
 
-        private string[,] _chessBoard = new string[_boardLength, _boardLength]; // String will be replaced piece type
-        private int _numberOfMoves = 32;
+        public Piece[,] ChessBoard { get; set; } = new Piece[_boardLength,_boardLength];
+        
+        private const int _numberOfMoves = 32;
+
+        private const int _pawn = 0;
+
+        private const int _bishop = 1;
+
+        private const int _knight = 2;
+
+        private const int _rook = 3;
+
+        private const int _queen = 4;
+
+        private const int _king = 5;
+        
+        private void SetSpecialPieces(bool IsWhite)
+        {
+            int row;
+            int inc = 0;
+            inc = 1;
+            if (IsWhite)
+            {
+                row = 0;
+            }
+            else
+            {
+                row = _boardLength - 1;
+            }
+            ChessBoard[row, inc] = new Piece((row, inc), _rook, IsWhite, true);
+            inc = 1;
+            ChessBoard[row, inc] = new Piece((row, inc), _knight, IsWhite, true);
+            inc++;
+            ChessBoard[row, inc] = new Piece((row, inc), _bishop, IsWhite, true);
+            inc++;
+            ChessBoard[row, inc] = new Piece((row, inc), _king, IsWhite, true);
+            inc++;
+            ChessBoard[row, inc] = new Piece((row, inc), _queen, IsWhite, true);
+            inc++;
+            ChessBoard[row, inc] = new Piece((row, inc), _bishop, IsWhite, true);
+            inc++;
+            ChessBoard[row, inc] = new Piece((row, inc), _knight, IsWhite, true);
+            inc++;
+            ChessBoard[row, inc] = new Piece((row, inc), _rook, IsWhite, true);
+
+        }
+
+        private void SetPawns(bool IsWhite)
+        {
+            int row;
+            if (IsWhite)
+            {
+                row = 1;
+            }
+            else
+            {
+                row = _boardLength - 2;
+            }
+            for (int i = 0; i < _boardLength; i++)
+            {
+                ChessBoard[row, i] = new Piece((row, i), _pawn, IsWhite, true);
+            }
+        }
+
+        public void SetPieces()
+        {
+            SetSpecialPieces(true);
+            SetPawns(true);
+            SetSpecialPieces(false);
+            SetPawns(false);
+        }
 
 
         /// <summary>
         /// Moves pece
         /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         public void MovePiece(Piece p)
 
         { }
@@ -147,20 +215,16 @@ namespace Chess
         {
             if (p.Position.row < _boardLength && p.Position.col < _boardLength)
             {
-                if (_chessBoard[p.Position.row, p.Position.col] > _chessBoard.length)
+                if (p.IsWhite && ChessBoard[p.Position.row, p.Position.col] == p)
                 {
                     return false;
                 }
-                if (p.IsWhite && _chessBoard[p.Position.row, p.Position.col] == p)
-                {
-                    return false;
-                }
-                else if (p.IsBlack && _chessBoard[p.Position.row, p.Position.col] == p)
+                else if (!p.IsWhite && ChessBoard[p.Position.row, p.Position.col] == p)
                 {
                     return true;
                 }
 
-                
+                return true;
             } 
             else
             {

@@ -17,7 +17,7 @@
         //private const int _numberOfMoves = 3;
 
 
-        Piece((int row, int col) position, int rank, bool isWhite, bool start)
+        public Piece((int row, int col) position, int rank, bool isWhite, bool start)
         {
             Position = position;
             Rank = rank;
