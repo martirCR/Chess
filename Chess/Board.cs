@@ -28,7 +28,6 @@ namespace Chess
         {
             int row;
             int inc = 0;
-            inc = 1;
             if (IsWhite)
             {
                 row = 0;
@@ -137,12 +136,15 @@ namespace Chess
             return false;
         }
 
-        private (int row, int col)[] PossibleMoves(Piece p)
+        }
+
+
+        public (int row, int col)[] ValidMove(Piece p)
         {
 
             switch (p.Rank)
             {
-                case 0: // pawn
+                case _pawn: // pawn
                     {
                         (int row, int col)[] moves = new (int row, int col)[3];
                         if (p.Start)
@@ -154,7 +156,7 @@ namespace Chess
                         moves[3] = (p.Position.row + 1, p.Position.col + 1);
                         return moves;
                     }
-                case 1: // bishop
+                case _bishop: // bishop
                     {
 
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
@@ -166,13 +168,13 @@ namespace Chess
                             que.Enqueue((p.Position.row - i, p.Position.col - i));
                         }
                         (int row, int col)[] moves = new (int row, int col)[que.Count];
-                        for (int i = 0; i < que.Count; i++)
+                        for (int i = que.Count; i > 0; i--)
                         {
                             moves[i] = que.Dequeue();
                         }
                         return moves;
                     }
-                case 2: // knight
+                case _knight: // knight
                     {
                         (int row, int col)[] moves = new (int row, int col)[7];
                         moves[0] = (p.Position.row + 2, p.Position.col - 1);// tall up left
@@ -185,7 +187,7 @@ namespace Chess
                         moves[7] = (p.Position.row - 1, p.Position.col - 2);//short down left
                         return moves;
                     }
-                case 3://rook
+                case _rook://rook
                     {
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
                         for (int i = 1; i < 8; i++)// 8 is the maximum number of spaces a piece can move
@@ -196,13 +198,13 @@ namespace Chess
                             que.Enqueue((p.Position.row, p.Position.col - i));
                         }
                         (int row, int col)[] moves = new (int row, int col)[que.Count];
-                        for (int i = 0; i < que.Count; i++)
+                        for (int i = que.Count; i > 0; i--)
                         {
                             moves[i] = que.Dequeue();
                         }
                         return moves;
                     }
-                case 4://queen
+                case _queen://queen
                     {
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
                         for (int i = 1; i < 8; i++)// 8 is the maximum number of spaces a piece can move
@@ -217,7 +219,7 @@ namespace Chess
                             que.Enqueue((p.Position.row - i, p.Position.col - i));
                         }
                         (int row, int col)[] moves = new (int row, int col)[que.Count];
-                        for (int i = 0; i < que.Count; i++)
+                        for (int i = que.Count; i > 0; i--)
                         {
                             moves[i] = que.Dequeue();
                         }
@@ -227,7 +229,7 @@ namespace Chess
 
 
                     }
-                case 5://king
+                case _king://king
                     {
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
                         for (int i = 0; i < 1; i++)// 8 is the maximum number of spaces a piece can move
@@ -256,25 +258,30 @@ namespace Chess
         }
 
 
+        public void check()
+        {
 
+        }
 
         /// <summary>
         /// Checks to see if Piece is already on board
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private bool IsValid(Piece p)
+        /// <returns>True if valid, false if not.</returns>
+        private bool IsValid(Piece p, int row, int col)
         {
-            if (p.Position.row < _boardLength && p.Position.col < _boardLength)
+            if (row < _boardLength && col < _boardLength)
             {
-               
-                if (p.IsWhite && ChessBoard[p.Position.row, p.Position.col] == p)
+                if (ChessBoard[row, col] != null)
                 {
-                    return false;
-                }
-                else if (!p.IsWhite && ChessBoard[p.Position.row, p.Position.col] == p)
-                {
-                    return true;
+                    if (((p.IsWhite && ChessBoard[row, col].IsWhite) || !p.IsWhite && !ChessBoard[row,col].IsWhite) 
+                        && ChessBoard[row, col] == p)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
 
                 return true;
