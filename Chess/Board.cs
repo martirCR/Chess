@@ -18,53 +18,46 @@ namespace Chess
             {
                 case 0:
                     {
-                        (int row, int col)[] _moves = new (int row, int col)[_numberOfMoves];
-                        public (int row, int col)[] ValidMove(Piece p)
-                        {
-                            if (rank == 0)
+                            if (_start)
                             {
-                                if (_start)
-                                {
-                                    moves[0] = (p.Position.row + 2, p.Position.col);
-                                }
-                                moves[1] = (p.Position.row + 1, p.Position.col);
-                                moves[2] = (p.Position.row + 1, p.Position.col - 1);
+                                moves[0] = (p.Position.row + 2, p.Position.col);
+                            }
+                            moves[1] = (p.Position.row + 1, p.Position.col);
+                            moves[2] = (p.Position.row + 1, p.Position.col - 1);
+                            break;
+                        }
+                case 1:
+                            {
+
+                                break;
+                            }
+                        case 2:
+                            {
+
+                                break;
                             }
                         }
-                        break;
-                    }
-                case 1:
-                    {
 
-                        break;
-                    }
-                case 2:
-                    {
 
-                        break;
                     }
+
+
+                    /// <summary>
+                    /// Checks to see if Piece is already on board
+                    /// </summary>
+                    /// <returns></returns>
+                    /// <exception cref="NotImplementedException"></exception>
+                    private bool IsValid()
+                    {
+                        throw new NotImplementedException();
+                    }
+
+
+
+
+
+
+
+
             }
-
-
         }
-
-
-        /// <summary>
-        /// Checks to see if Piece is already on board
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private bool IsValid()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-
-
-
-    }
-}
