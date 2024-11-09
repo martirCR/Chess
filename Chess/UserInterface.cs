@@ -14,6 +14,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using System.Threading.Tasks;
+using System.Net.NetworkInformation;
+
 
 namespace Chess
 {
@@ -25,7 +28,7 @@ namespace Chess
 
         private Piece[,] _pieceLocation = new Piece[_boardLength,_boardLength];
 
-
+        private PiecePainter _piecePainter = new PiecePainter();
         public UserInterface()
         {
             InitializeComponent();
@@ -74,7 +77,14 @@ namespace Chess
                     if (_board.ChessBoard[i, j] != null)
                     {
                         Piece p = _board.ChessBoard[i, j];
-                        l.Text = p.Rank.ToString();
+                        //if(p.Rank == 1)
+                        //{
+                        //    Graphics g = e.Gr;
+                        //}
+                        //else
+                        //{
+                            l.Text = p.Rank.ToString();
+                        //}
                     }
                     l.Width = uxChessBoard.Width / _boardLength;
                     l.Height = uxChessBoard.Height / _boardLength;

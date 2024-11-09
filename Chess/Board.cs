@@ -117,7 +117,7 @@ namespace Chess
                             que.Enqueue((p.Position.row - i, p.Position.col - i));
                         }
                         (int row, int col)[] moves = new (int row, int col)[que.Count];
-                        for (int i = 0; i < que.Count; i++)
+                        for (int i = que.Count; i > 0; i--)
                         {
                             moves[i] = que.Dequeue();
                         }
@@ -147,7 +147,7 @@ namespace Chess
                             que.Enqueue((p.Position.row, p.Position.col - i));
                         }
                         (int row, int col)[] moves = new (int row, int col)[que.Count];
-                        for (int i = 0; i < que.Count; i++)
+                        for (int i = que.Count; i > 0; i--)
                         {
                             moves[i] = que.Dequeue();
                         }
@@ -168,7 +168,7 @@ namespace Chess
                             que.Enqueue((p.Position.row - i, p.Position.col - i));
                         }
                         (int row, int col)[] moves = new (int row, int col)[que.Count];
-                        for (int i = 0; i < que.Count; i++)
+                        for (int i = que.Count; i > 0; i--)
                         {
                             moves[i] = que.Dequeue();
                         }
@@ -207,24 +207,30 @@ namespace Chess
         }
 
 
+        public void check()
+        {
 
+        }
 
         /// <summary>
         /// Checks to see if Piece is already on board
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private bool IsValid(Piece p)
+        /// <returns>True if valid, false if not.</returns>
+        private bool IsValid(Piece p, int row, int col)
         {
-            if (p.Position.row < _boardLength && p.Position.col < _boardLength)
+            if (row < _boardLength && col < _boardLength)
             {
-                if (p.IsWhite && ChessBoard[p.Position.row, p.Position.col] == p)
+                if (ChessBoard[row, col] != null)
                 {
-                    return false;
-                }
-                else if (!p.IsWhite && ChessBoard[p.Position.row, p.Position.col] == p)
-                {
-                    return true;
+                    if (((p.IsWhite && ChessBoard[row, col].IsWhite) || !p.IsWhite && !ChessBoard[row,col].IsWhite) 
+                        && ChessBoard[row, col] == p)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
 
                 return true;

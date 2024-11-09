@@ -36,7 +36,7 @@
             // 
             // uxChessBoard
             // 
-            uxChessBoard.Location = new System.Drawing.Point(0, 119);
+            uxChessBoard.Location = new System.Drawing.Point(13, 88);
             uxChessBoard.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             uxChessBoard.Name = "uxChessBoard";
             uxChessBoard.Size = new System.Drawing.Size(1000, 1000);
@@ -76,7 +76,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new System.Drawing.Size(1013, 1126);
+            ClientSize = new System.Drawing.Size(1027, 1126);
             Controls.Add(uxTurn);
             Controls.Add(uxNew);
             Controls.Add(uxTurnColor);
