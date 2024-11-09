@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Chess
+﻿namespace Chess
 {
     public class Piece
+
     {
-        
         public bool IsWhite { get; }
 
         public (int row, int col) Position { get; set; }
 
-        public bool Start { get; set; } = true;
+
+        public int Rank { get; }
+
+
+        public bool Start { get; set; }
+
         /// change number of slots in moes based on valid moves for piece, so pawn has 4 valid moves
-        public const int NumberOfMoves = 3;
-        public int Rank;
+        //private const int _numberOfMoves = 3;
 
 
         Piece((int row, int col) position, int rank, bool isWhite, bool start)
@@ -27,5 +25,6 @@ namespace Chess
             Start = start;
         }
         
+
     }
 }

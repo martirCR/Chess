@@ -16,6 +16,7 @@ namespace Chess
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
         public void MovePiece(Piece p)
+
         { }
             (int row, int col)[] ValidMove(Piece p)            {
                 
@@ -102,6 +103,9 @@ namespace Chess
                             }
                             return moves;
 
+
+
+
                         }
                     case 5:
                     {
@@ -139,9 +143,12 @@ namespace Chess
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private bool IsValid()
+        private bool IsValid(Piece p)
         {
-            throw new NotImplementedException();
+            if (p.Position.row > _boardLength || p.Position.col > _boardLength)
+            {
+
+            }
         }
 
 
