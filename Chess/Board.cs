@@ -145,9 +145,26 @@ namespace Chess
         /// <exception cref="NotImplementedException"></exception>
         private bool IsValid(Piece p)
         {
-            if (p.Position.row > _boardLength || p.Position.col > _boardLength)
+            if (p.Position.row < _boardLength && p.Position.col < _boardLength)
             {
+                if (_chessBoard[p.Position.row, p.Position.col] > _chessBoard.length)
+                {
+                    return false;
+                }
+                if (p.IsWhite && _chessBoard[p.Position.row, p.Position.col] == p)
+                {
+                    return false;
+                }
+                else if (p.IsBlack && _chessBoard[p.Position.row, p.Position.col] == p)
+                {
+                    return true;
+                }
 
+                
+            } 
+            else
+            {
+                return false;
             }
         }
 
