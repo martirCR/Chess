@@ -6,16 +6,9 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 //using System.Threading.Tasks;
-using System.Net.NetworkInformation;
 
 
 namespace Chess
@@ -26,9 +19,11 @@ namespace Chess
 
         private const int _boardLength = 8;
 
-        private Piece[,] _pieceLocation = new Piece[_boardLength,_boardLength];
+        private Piece[,] _pieceLocation = new Piece[_boardLength, _boardLength];
 
         private PiecePainter _piecePainter = new PiecePainter();
+
+        private Label _currentSelected;
         public UserInterface()
         {
             InitializeComponent();
@@ -77,13 +72,13 @@ namespace Chess
                     if (_board.ChessBoard[i, j] != null)
                     {
                         Piece p = _board.ChessBoard[i, j];
-                        //if(p.Rank == 1)
-                        //{
-                        //    Graphics g = e.Gr;
-                        //}
-                        //else
-                        //{
-                            l.Text = p.Rank.ToString();
+                        /* if (p.Rank == 1)
+                         {
+                             Graphics g = 
+                         }
+                         else
+                         {*/
+                        l.Text = p.Rank.ToString();
                         //}
                     }
                     l.Width = uxChessBoard.Width / _boardLength;
@@ -102,9 +97,26 @@ namespace Chess
                     l.Font = new Font(FontFamily.GenericMonospace.ToString(), 16);
                     l.Click += ChessBoard;
                     uxChessBoard.Controls.Add(l);
-                   // isWhite = !isWhite;
+                    // isWhite = !isWhite;
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets a label back to the default Label
+        /// </summary>
+        /// <param name="l">The label being set to default</param>
+        private void DefaultLabel(Label l)
+        {
+            if (l.BackColor == Color.LightBlue)
+            {
+                l.BackColor = Color.White;
+            }
+            else
+            {
+                l.BackColor = Color.Green;
+            }
+            l.BorderStyle = BorderStyle.FixedSingle;
         }
 
         /// <summary>
@@ -114,19 +126,30 @@ namespace Chess
         /// <param name="e">Info on the event</param>
         private void ChessBoard(object sender, EventArgs e)
         {
-            Label l = (Label)sender;
-            if (l.BackColor == Color.AliceBlue)
+            if (_currentSelected != null)
             {
-                l.BackColor = Color.White;
+                DefaultLabel(_currentSelected);
+            }
+            Label l = (Label)sender;
+
+            if (l.BackColor == Color.White)
+            {
+                l.BackColor = Color.LightBlue;
+                l.BorderStyle = BorderStyle.Fixed3D;
+            }
+            else if (l.BackColor == Color.Green)
+            {
+                l.BackColor = Color.DarkGreen;
                 l.BorderStyle = BorderStyle.Fixed3D;
             }
             else
             {
-                l.BackColor = Color.AliceBlue;
-                l.BorderStyle = BorderStyle.FixedSingle;
+                DefaultLabel(l);
             }
+
+            _currentSelected = l;
         }
     }
-    
-    
+
+
 }

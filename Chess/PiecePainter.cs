@@ -40,7 +40,7 @@ namespace Chess
         /// </summary>
         public Pen HighlightPen { get; } = new Pen(Color.Magenta, _highlightWidth);
 
-        //public Image newImage = Image.FromFile("black-chess-bishop-stroke-png-5694544.png");
+        public Image newImage = Image.FromFile("C:\\Users\\odoro\\source\\repos\\Chess\\Chess\\Chess Pieces pngs\\black-chess-bishop-stroke-png-5694544.png");
 
         /// <summary>
         /// Draws the back of a card on the given graphics context at the given location.
@@ -48,10 +48,10 @@ namespace Chess
         /// <param name="g">The graphics context on which to draw.</param>
         /// <param name="x">The x-coordinate of the upper-left corner.</param>
         /// <param name="y">The y-coordinate of the upper-left corner.</param>
-        //public void DrawPiece(Graphics g, int x, int y)
-        //{
-        //    g.DrawImage(newImage,0,0);
-        //}
+        public void DrawPiece(Graphics g, int x, int y)
+        {
+            g.DrawImage(newImage,0,0);
+        }
         
     }
 }
