@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Chess
 {
@@ -87,6 +88,18 @@ namespace Chess
         {
             if (IsValid(p))
             {
+                int? index;
+                if (MoveSearch((move),possible,out index))
+                {
+                    for (int i = 0; i < move.row; i++)
+                    {
+                        ChessBoard[i, 
+                    }
+                    if (ChessBoard[move.row,move.col] != null)
+                    {
+                        
+                    }
+                }
                 
                 if(ChessBoard[move.row,move.col] == null)// if the space is empty
                 {
@@ -103,9 +116,25 @@ namespace Chess
             }
             return;
         }
-        private bool MoveSearch ((int row, int col), (int row, int col)[] possible)
-        {
-            possible.
+        /// <summary>
+        /// search for move returns true if found and if found the out parameter is the index
+        /// </summary>
+        /// <param name="move"></param>
+        /// <param name="possible"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private bool MoveSearch ((int row, int col) move, (int row, int col)[] possible, out int? index)
+        {            
+            for (int i = 0; i < possible.Length; i++)
+            {
+                if (possible[i] == move)
+                {
+                    index = i;
+                    return true;
+                }
+            }
+            index = null;
+            return false;
         }
 
         private (int row, int col)[] PossibleMoves(Piece p)
