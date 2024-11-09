@@ -6,16 +6,30 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
-    internal interface Piece
+    public class Piece
     {
-         bool IsWhite { get; }
-         (int row, int col) Position { get; set; }       
+        
+        public bool IsWhite { get; }
 
-        (int row, int col)[] ValidMove(Piece p);
-        /// add a const int _numberOfMoves to determine maximum number of spaces a piece can move ie. pawn._numberOfMoves = 3 because it has 4 valid moves and minus one because 0 is a value in the array
+        public (int row, int col) Position { get; set; }
 
-        //implement constructor in each class
+        public bool _start = true;
+        /// change number of slots in moes based on valid moves for piece, so pawn has 4 valid moves
+        public const int _numberOfMoves = 3;
 
 
+        //update in the board class to false once moved
+        /*public (int row, int col)[] ValidMove(Piece p)
+        {
+            
+            (int row, int col)[] moves = new (int row, int col)[_numberOfMoves];
+            if (_start)
+            {
+                moves[0] = (p.Position.row + 2,p.Position.col);
+            }
+            moves[1] = (p.Position.row + 1,p.Position.col);
+            moves[2] = (p.Position.row + 1, p.Position.col - 1);
+        }*/
+        
     }
 }
