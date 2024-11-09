@@ -86,7 +86,7 @@ namespace Chess
         public void MovePiece(Piece p)
 
         { }
-            (int row, int col)[] ValidMove(Piece p)            {
+            public (int row, int col)[] ValidMove(Piece p)            {
                 
                 switch (p.Rank)
                 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,16 +40,18 @@ namespace Chess
         /// </summary>
         public static Pen HighlightPen { get; } = new Pen(Color.Magenta, _highlightWidth);
 
+        public static Image newImage = Image.FromFile("black-chess-bishop-stroke-png-5694544.png");
+
         /// <summary>
         /// Draws the back of a card on the given graphics context at the given location.
         /// </summary>
         /// <param name="g">The graphics context on which to draw.</param>
         /// <param name="x">The x-coordinate of the upper-left corner.</param>
         /// <param name="y">The y-coordinate of the upper-left corner.</param>
-        /*public static void DrawBack(Graphics g, int x, int y)
+        public static void DrawPiece(Graphics g, int x, int y)
         {
-            g.DrawImage(CardBack, x, y, CardWidth, CardHeight);
+            g.DrawImage(newImage,0,0);
         }
-        */
+        
     }
 }
