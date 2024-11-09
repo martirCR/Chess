@@ -1,4 +1,11 @@
-﻿using System;
+﻿/* Userinterface.cs
+ * Author: Thomas idk
+ *         Martir Caceres Ramos
+ *         Tim
+*/
+
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +17,9 @@ using System.Windows.Forms;
 
 namespace Chess
 {
-    public partial class Form1 : Form
+    public partial class UserInterface : Form
     {
-        public Form1()
+        public UserInterface()
         {
             InitializeComponent();
         }
