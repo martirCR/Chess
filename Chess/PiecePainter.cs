@@ -40,7 +40,7 @@ namespace Chess
         /// </summary>
         public Pen HighlightPen { get; } = new Pen(Color.Magenta, _highlightWidth);
 
-        public Image newImage = Image.FromFile("C:\\Users\\odoro\\source\\repos\\Chess\\Chess\\Chess Pieces pngs\\black-chess-bishop-stroke-png-5694544.png");
+        public Image newImage = Image.FromFile("C:\\Users\\timot\\source\\repos\\Chess\\Chess\\Chess Pieces pngs\\black-chess-bishop-stroke-png-5694544.png");
 
         /// <summary>
         /// Draws the back of a card on the given graphics context at the given location.
