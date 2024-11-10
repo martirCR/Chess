@@ -154,11 +154,15 @@ namespace Chess
                 int col = p.Position.col;
                 (int row, int col)[] validMoves = _board.ValidMove(p);
 
-
+                
                 string coordinates = currentSelected.Name;
 
                 int currentRow = Convert.ToInt32(coordinates[0] - '0');
                 int currentCol = Convert.ToInt32(coordinates[1] - '0');
+                if(currentRow > 7|| currentCol > 7)
+                {
+                    return;
+                }
 
                 for (int i = 0; i < validMoves.Length; i++)
                 {
@@ -169,6 +173,10 @@ namespace Chess
                         _board.ChessBoard[currentRow, currentCol] = p;
                         p.Position = (currentRow, currentCol);
                         p.Start = false;
+
+                    }
+                    else
+                    {
 
                     }
                 }

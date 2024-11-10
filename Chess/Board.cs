@@ -136,33 +136,65 @@ namespace Chess
             {
                 case _pawn: // pawn 
                     {
-                        (int row, int col)[] moves = new (int row, int col)[3];
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
                         if (p.Start)//double jump check
                         {
-                            if (!p.IsWhite && ChessBoard[p.Position.row + 2, p.Position.col] == null && ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
+                            if (p.IsWhite)
                             {
-                                que.Enqueue((p.Position.row + 2, p.Position.col));
+                                if (IsValid(p, p.Position.row + 2, p.Position.col) && ChessBoard[p.Position.row + 2, p.Position.col] == null && ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
+                                {
+                                    que.Enqueue((p.Position.row + 2, p.Position.col));
+                                }
+                            }
+                            else
+                            {
+                                if (IsValid(p, p.Position.row - 2, p.Position.col) & ChessBoard[p.Position.row - 2, p.Position.col] == null && ChessBoard[p.Position.row - 1, p.Position.col] == null)// if the space is empty
+                                {
+                                    que.Enqueue((p.Position.row - 2, p.Position.col));
+                                }
                             }
                         }
                         //single jump check
-                        if (ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
+                        if (p.IsWhite)
+                        {
+                            if (IsValid(p, p.Position.row + 1, p.Position.col) && ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
+                            {
+                                que.Enqueue((p.Position.row + 1, p.Position.col));
+                            }
+                        }
+                        else
+                        {
+                            if (IsValid(p, p.Position.row - 1, p.Position.col) && ChessBoard[p.Position.row - 1, p.Position.col] == null)// if the space is empty
+                            {
+                                que.Enqueue((p.Position.row - 1, p.Position.col));
+                            }
+                        }
+                        if (IsValid(p, p.Position.row + 1, p.Position.col) && ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
                         {
                             que.Enqueue((p.Position.row + 2, p.Position.col));
                         }
                         //steal left check                        
-                        if (ChessBoard[p.Position.row + 1, p.Position.col - 1] != null && ChessBoard[p.Position.row + 1, p.Position.col - 1].IsWhite != p.IsWhite)//if it is a opposite color
+                        if (IsValid(p, p.Position.row - 1, p.Position.col - 1) && ChessBoard[p.Position.row - 1, p.Position.col - 1] != null && ChessBoard[p.Position.row - 1, p.Position.col - 1].IsWhite != p.IsWhite)//if it is a opposite color
                         {
-                            que.Enqueue((p.Position.row + 2, p.Position.col));
+                            que.Enqueue((p.Position.row - 1, p.Position.col - 1));
                         }
                         //steal right check                        
-                        if (ChessBoard[p.Position.row + 1, p.Position.col + 1] != null && ChessBoard[p.Position.row + 1, p.Position.col + 1].IsWhite != p.IsWhite)//if it is a opposite color
+                        if (IsValid(p, p.Position.row - 1, p.Position.col + 1) && ChessBoard[p.Position.row - 1, p.Position.col + 1] != null && ChessBoard[p.Position.row - 1, p.Position.col + 1].IsWhite != p.IsWhite)//if it is a opposite color
                         {
-                            que.Enqueue((p.Position.row + 2, p.Position.col));
+                            que.Enqueue((p.Position.row - 1, p.Position.col + 1));
                         }
+                        (int row, int col)[] moves = new (int row, int col)[que.Count + 1];
                         for (int i = que.Count; i > 0; i--)
                         {
-                            moves[i] = que.Dequeue();
+                            if (que.Peek().row < 8 || que.Peek().col < 8)
+                            {
+                                moves[i] = que.Dequeue();
+                            }
+                            else
+                            {
+                                que.Dequeue();
+                            }
+
                         }
                         return moves;
 
@@ -179,13 +211,22 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row + i, p.Position.col + i] == null) || ChessBoard[p.Position.row + i, p.Position.col + i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row - i, p.Position.col + i))
                                 {
-                                    que.Enqueue((p.Position.row + i, p.Position.col + i));
+                                    if ((ChessBoard[p.Position.row - i, p.Position.col + i] == null) || ChessBoard[p.Position.row - i, p.Position.col + i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row - i, p.Position.col + i));
+                                    }
+                                    else
+                                    {
+                                        ur = false;
+                                        break;
+                                    }
                                 }
                                 else
                                 {
                                     ur = false;
+                                    break;
                                 }
                             }
                         }
@@ -194,13 +235,21 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row + i, p.Position.col - i] == null) || ChessBoard[p.Position.row + i, p.Position.col - i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row - i, p.Position.col - i))
                                 {
-                                    que.Enqueue((p.Position.row + i, p.Position.col - i));
+                                    if ((ChessBoard[p.Position.row - i, p.Position.col - i] == null) || ChessBoard[p.Position.row - i, p.Position.col - i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row - i, p.Position.col - i));
+                                    }
+                                    else
+                                    {
+                                        ul = false; break;
+                                    }
                                 }
                                 else
                                 {
                                     ul = false;
+                                    break;
                                 }
                             }
                         }
@@ -209,50 +258,92 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row - i, p.Position.col + i] == null) || ChessBoard[p.Position.row - i, p.Position.col + i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row + i, p.Position.col + i))
                                 {
-                                    que.Enqueue((p.Position.row - i, p.Position.col + i));
+                                    if ((ChessBoard[p.Position.row + i, p.Position.col + i] == null) || ChessBoard[p.Position.row + i, p.Position.col + i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row + i, p.Position.col + i));
+                                    }
+                                    else
+                                    {
+                                        dr = false; break;
+                                    }
                                 }
-                                else
-                                {
-                                    dr = false;
-                                }
+                                else { dr = false; break; }
                             }
                         }
                         //down left
                         while (dl)
                         {
                             for (int i = 1; i < 8; i++)
+
                             {
-                                if ((ChessBoard[p.Position.row - i, p.Position.col - i] == null) || ChessBoard[p.Position.row - i, p.Position.col - i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row + i, p.Position.col - i))
                                 {
-                                    que.Enqueue((p.Position.row - i, p.Position.col - i));
+                                    if ((ChessBoard[p.Position.row + i, p.Position.col - i] == null) || ChessBoard[p.Position.row + i, p.Position.col - i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row + i, p.Position.col - i));
+                                    }
+                                    else
+                                    {
+                                        dl = false; break;
+                                    }
                                 }
-                                else
-                                {
-                                    dl = false;
-                                }
+                                else { dl = false; break; }
                             }
                         }
-                        (int row, int col)[] moves = new (int row, int col)[que.Count];
+                        (int row, int col)[] moves = new (int row, int col)[que.Count + 1];
                         for (int i = que.Count; i > 0; i--)
                         {
-                            moves[i] = que.Dequeue();
+                            if (que.Peek().row < 8 || que.Peek().col < 8)
+                            {
+                                moves[i] = que.Dequeue();
+                            }
+                            else
+                            {
+                                que.Dequeue();
+                            }
+
                         }
                         return moves;
                     }
                 case _knight: // knight
                     {
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
-                        (int row, int col)[] spots = new (int row, int col)[7];
-                        spots[0] = (p.Position.row + 2, p.Position.col - 1);//tall up left
-                        spots[1] = (p.Position.row + 2, p.Position.col + 1);//tall up right
-                        spots[2] = (p.Position.row + 1, p.Position.col - 2);//short up left
-                        spots[3] = (p.Position.row + 1, p.Position.col + 2);//short up right
-                        spots[4] = (p.Position.row - 2, p.Position.col + 1);//tall down right
-                        spots[5] = (p.Position.row - 2, p.Position.col - 1);//tall down left
-                        spots[6] = (p.Position.row - 1, p.Position.col + 2);//short down right
-                        spots[7] = (p.Position.row - 1, p.Position.col - 2);//short down left                        
+                        Queue<(int row, int col)> spots = new Queue<(int row, int col)>();                        
+                        if(IsValid(p, p.Position.row - 2, p.Position.col - 1))
+                        {
+                            spots.Enqueue((p.Position.row - 2, p.Position.col - 1));//tall up left
+                        }
+                        if (IsValid(p, p.Position.row - 2, p.Position.col + 1))
+                        {
+                            spots.Enqueue((p.Position.row - 2, p.Position.col + 1));//tall up right
+                        }
+                        if (IsValid(p, p.Position.row - 1, p.Position.col - 2))
+                        {
+                            spots.Enqueue((p.Position.row - 1, p.Position.col - 2));//short up left
+                        }
+                        if (IsValid(p, p.Position.row - 1, p.Position.col + 2))
+                        {
+                            spots.Enqueue((p.Position.row - 1, p.Position.col + 2));//short up right
+                        }
+                        if (IsValid(p, p.Position.row + 2, p.Position.col + 1))
+                        {
+                            spots.Enqueue((p.Position.row + 2, p.Position.col + 1));//tall down right
+                        }
+                        if (IsValid(p, p.Position.row + 2, p.Position.col - 1))
+                        {
+                            spots.Enqueue((p.Position.row + 2, p.Position.col - 1));//tall down left
+                        }
+                        if (IsValid(p, p.Position.row + 1, p.Position.col + 2))
+                        {
+                            spots.Enqueue((p.Position.row + 1, p.Position.col + 2));//short down right
+                        }
+                        if (IsValid(p, p.Position.row + 1, p.Position.col - 2))
+                        {
+                            spots.Enqueue((p.Position.row + 1, p.Position.col - 2));//short down left
+                        }
+                                         
 
                         foreach ((int row, int col) spot in spots)
                         {
@@ -261,10 +352,18 @@ namespace Chess
                                 que.Enqueue((spot));
                             }
                         }
-                        (int row, int col)[] moves = new (int row, int col)[que.Count];
+                        (int row, int col)[] moves = new (int row, int col)[que.Count+1];
                         for (int i = que.Count; i > 0; i--)
                         {
-                            moves[i] = que.Dequeue();
+                            if (que.Peek().row < 8 || que.Peek().col < 8)
+                            {
+                                moves[i] = que.Dequeue();
+                            }
+                            else
+                            {
+                                que.Dequeue();
+                            }
+
                         }
                         return moves;
                     }
@@ -279,14 +378,21 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row + i, p.Position.col] == null) || ChessBoard[p.Position.row + i, p.Position.col].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row - i, p.Position.col))
                                 {
-                                    que.Enqueue((p.Position.row + i, p.Position.col));
-                                }
+                                    if ((ChessBoard[p.Position.row - i, p.Position.col] == null) || ChessBoard[p.Position.row - i, p.Position.col].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row - i, p.Position.col));
+                                    }
 
+                                    else
+                                    {
+                                        up = false; break;
+                                    }
+                                }
                                 else
                                 {
-                                    up = false;
+                                    up = false; break;
                                 }
                             }
                         }
@@ -295,14 +401,19 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row - i, p.Position.col] == null) || ChessBoard[p.Position.row - i, p.Position.col].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row + i, p.Position.col))
                                 {
-                                    que.Enqueue((p.Position.row - i, p.Position.col));
+                                    if ((ChessBoard[p.Position.row + i, p.Position.col] == null) || ChessBoard[p.Position.row + i, p.Position.col].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row + i, p.Position.col));
+                                    }
+                                    else
+                                    {
+                                        down = false; break;
+
+                                    }
                                 }
-                                else
-                                {
-                                    down = false;
-                                }
+                                else { down = false; break; }
                             }
                         }
                         //right
@@ -310,13 +421,20 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row, p.Position.col + i] == null) || ChessBoard[p.Position.row, p.Position.col + i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row, p.Position.col + i))
                                 {
-                                    que.Enqueue((p.Position.row, p.Position.col + i));
+                                    if ((ChessBoard[p.Position.row, p.Position.col + i] == null) || ChessBoard[p.Position.row, p.Position.col + i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row, p.Position.col + i));
+                                    }
+                                    else
+                                    {
+                                        right = false; break;
+                                    }
                                 }
                                 else
                                 {
-                                    right = false;
+                                    right = false; break;
                                 }
                             }
                         }
@@ -325,23 +443,43 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row, p.Position.col - i] == null) || ChessBoard[p.Position.row, p.Position.col - i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row, p.Position.col - i))
                                 {
-                                    que.Enqueue((p.Position.row, p.Position.col - i));
+
+                                    if ((ChessBoard[p.Position.row, p.Position.col - i] == null) || ChessBoard[p.Position.row, p.Position.col - i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row, p.Position.col - i));
+                                    }
+                                    else
+                                    {
+                                        left = false; break;
+                                    }
                                 }
-                                else
-                                {
-                                    left = false;
-                                }
+                                else { left = false; break; }
                             }
                         }
-                        (int row, int col)[] moves = new (int row, int col)[que.Count];
+                        (int row, int col)[] moves = new (int row, int col)[que.Count + 1];
                         for (int i = que.Count; i > 0; i--)
                         {
-                            moves[i] = que.Dequeue();
+                            if (que.Peek().row < 8 || que.Peek().col < 8)
+                            {
+                                moves[i] = que.Dequeue();
+                            }
+                            else
+                            {
+                                que.Dequeue();
+                            }
                         }
                         return moves;
                     }
+
+
+
+
+
+
+
+
                 case _queen://queen
                     {
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
@@ -353,20 +491,27 @@ namespace Chess
                         bool ul = true;//up left
                         bool dr = true;// down right
                         bool dl = true;// down left
-                        //each while stops when it encounter a piece and if it is the opposite color it adds to the queue
-                        //up 
+                                       //each while stops when it encounter a piece and if it is the opposite color it adds to the queue
+                                       //up 
                         while (up)
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row + i, p.Position.col] == null) || ChessBoard[p.Position.row + i, p.Position.col].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row - i, p.Position.col))
                                 {
-                                    que.Enqueue((p.Position.row + i, p.Position.col));
-                                }
+                                    if ((ChessBoard[p.Position.row - i, p.Position.col] == null) || ChessBoard[p.Position.row - i, p.Position.col].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row - i, p.Position.col));
+                                    }
 
+                                    else
+                                    {
+                                        up = false; break;
+                                    }
+                                }
                                 else
                                 {
-                                    up = false;
+                                    up = false; break;
                                 }
                             }
                         }
@@ -375,14 +520,19 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row - i, p.Position.col] == null) || ChessBoard[p.Position.row - i, p.Position.col].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row + i, p.Position.col))
                                 {
-                                    que.Enqueue((p.Position.row - i, p.Position.col));
+                                    if ((ChessBoard[p.Position.row + i, p.Position.col] == null) || ChessBoard[p.Position.row + i, p.Position.col].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row + i, p.Position.col));
+                                    }
+                                    else
+                                    {
+                                        down = false; break;
+
+                                    }
                                 }
-                                else
-                                {
-                                    down = false;
-                                }
+                                else { down = false; break; }
                             }
                         }
                         //right
@@ -390,13 +540,20 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row, p.Position.col + i] == null) || ChessBoard[p.Position.row, p.Position.col + i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row, p.Position.col + i))
                                 {
-                                    que.Enqueue((p.Position.row, p.Position.col + i));
+                                    if ((ChessBoard[p.Position.row, p.Position.col + i] == null) || ChessBoard[p.Position.row, p.Position.col + i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row, p.Position.col + i));
+                                    }
+                                    else
+                                    {
+                                        right = false; break;
+                                    }
                                 }
                                 else
                                 {
-                                    right = false;
+                                    right = false; break;
                                 }
                             }
                         }
@@ -405,14 +562,19 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row, p.Position.col - i] == null) || ChessBoard[p.Position.row, p.Position.col - i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row, p.Position.col - i))
                                 {
-                                    que.Enqueue((p.Position.row, p.Position.col - i));
+
+                                    if ((ChessBoard[p.Position.row, p.Position.col - i] == null) || ChessBoard[p.Position.row, p.Position.col - i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row, p.Position.col - i));
+                                    }
+                                    else
+                                    {
+                                        left = false; break;
+                                    }
                                 }
-                                else
-                                {
-                                    left = false;
-                                }
+                                else { left = false; break; }
                             }
                         }
                         //up right
@@ -420,13 +582,22 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row + i, p.Position.col + i] == null) || ChessBoard[p.Position.row + i, p.Position.col + i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row - i, p.Position.col + i))
                                 {
-                                    que.Enqueue((p.Position.row + i, p.Position.col + i));
+                                    if ((ChessBoard[p.Position.row - i, p.Position.col + i] == null) || ChessBoard[p.Position.row - i, p.Position.col + i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row - i, p.Position.col + i));
+                                    }
+                                    else
+                                    {
+                                        ur = false;
+                                        break;
+                                    }
                                 }
                                 else
                                 {
                                     ur = false;
+                                    break;
                                 }
                             }
                         }
@@ -435,13 +606,21 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row + i, p.Position.col - i] == null) || ChessBoard[p.Position.row + i, p.Position.col - i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row - i, p.Position.col - i))
                                 {
-                                    que.Enqueue((p.Position.row + i, p.Position.col - i));
+                                    if ((ChessBoard[p.Position.row - i, p.Position.col - i] == null) || ChessBoard[p.Position.row - i, p.Position.col - i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row - i, p.Position.col - i));
+                                    }
+                                    else
+                                    {
+                                        ul = false; break;
+                                    }
                                 }
                                 else
                                 {
                                     ul = false;
+                                    break;
                                 }
                             }
                         }
@@ -450,63 +629,110 @@ namespace Chess
                         {
                             for (int i = 1; i < 8; i++)
                             {
-                                if ((ChessBoard[p.Position.row - i, p.Position.col + i] == null) || ChessBoard[p.Position.row - i, p.Position.col + i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row + i, p.Position.col + i))
                                 {
-                                    que.Enqueue((p.Position.row - i, p.Position.col + i));
+                                    if ((ChessBoard[p.Position.row + i, p.Position.col + i] == null) || ChessBoard[p.Position.row + i, p.Position.col + i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row + i, p.Position.col + i));
+                                    }
+                                    else
+                                    {
+                                        dr = false; break;
+                                    }
                                 }
-                                else
-                                {
-                                    dr = false;
-                                }
+                                else { dr = false; break; }
                             }
                         }
                         //down left
                         while (dl)
                         {
                             for (int i = 1; i < 8; i++)
+
                             {
-                                if ((ChessBoard[p.Position.row - i, p.Position.col - i] == null) || ChessBoard[p.Position.row - i, p.Position.col - i].IsWhite != p.IsWhite)
+                                if (IsValid(p, p.Position.row + i, p.Position.col - i))
                                 {
-                                    que.Enqueue((p.Position.row - i, p.Position.col - i));
+                                    if ((ChessBoard[p.Position.row + i, p.Position.col - i] == null) || ChessBoard[p.Position.row + i, p.Position.col - i].IsWhite != p.IsWhite)
+                                    {
+                                        que.Enqueue((p.Position.row + i, p.Position.col - i));
+                                    }
+                                    else
+                                    {
+                                        dl = false; break;
+                                    }
                                 }
-                                else
-                                {
-                                    dl = false;
-                                }
+                                else { dl = false; break; }
                             }
                         }
-                        (int row, int col)[] moves = new (int row, int col)[que.Count];
+                        (int row, int col)[] moves = new (int row, int col)[que.Count+1];
                         for (int i = que.Count; i > 0; i--)
                         {
-                            moves[i] = que.Dequeue();
+                            if (que.Peek().row < 8 || que.Peek().col < 8)
+                            {
+                                moves[i] = que.Dequeue();
+                            }
+                            else
+                            {
+                                que.Dequeue();
+                            }
                         }
                         return moves;
                     }
                 case _king:
                     {
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
-                        (int row, int col)[] spots = new (int row, int col)[7];
-                        spots[0] = (p.Position.row + 1, p.Position.col);//up
-                        spots[1] = (p.Position.row - 1, p.Position.col);//down
-                        spots[2] = (p.Position.row, p.Position.col + 1);//right
-                        spots[3] = (p.Position.row, p.Position.col - 1);//left
-                        spots[4] = (p.Position.row + 1, p.Position.col + 1);//up right
-                        spots[5] = (p.Position.row + 1, p.Position.col - 1);//up left
-                        spots[6] = (p.Position.row - 1, p.Position.col + 1);//down
-                        spots[7] = (p.Position.row - 1, p.Position.col - 1);//down left
+                        Queue<(int row, int col)> spots = new Queue<(int row, int col)>();
+                        if (IsValid(p, p.Position.row - 1, p.Position.col))
+                        {
+                            spots.Enqueue((p.Position.row - 1, p.Position.col));//up
+                        }
+                        if (IsValid(p, p.Position.row + 1, p.Position.col))
+                        {
+                            spots.Enqueue((p.Position.row + 1, p.Position.col));//down
+                        }
+                        if (IsValid(p, p.Position.row, p.Position.col + 1))
+                        {
+                            spots.Enqueue((p.Position.row, p.Position.col + 1));//right
+                        }
+                        if (IsValid(p, p.Position.row, p.Position.col - 1))
+                        {
+                            spots.Enqueue((p.Position.row, p.Position.col - 1));//left
+                        }
+                        if (IsValid(p, p.Position.row - 1, p.Position.col + 1))
+                        {
+                            spots.Enqueue((p.Position.row - 1, p.Position.col + 1));//up right
+                        }
+                        if (IsValid(p, p.Position.row - 1, p.Position.col - 1))
+                        {
+                            spots.Enqueue((p.Position.row - 1, p.Position.col - 1));//up left
+                        }
+                        if (IsValid(p, p.Position.row + 1, p.Position.col + 1))
+                        {
+                            spots.Enqueue((p.Position.row + 1, p.Position.col + 1));//down right
+                        }
+                        if (IsValid(p, p.Position.row + 1, p.Position.col - 1))
+                        {
+                            spots.Enqueue((p.Position.row + 1, p.Position.col - 1));//down left
+                        }                       
 
                         foreach ((int row, int col) spot in spots)
                         {
-                            if ((ChessBoard[spot.row, spot.col] == null) || ChessBoard[spot.row, spot.col].IsWhite != p.IsWhite)
+                            if ((IsValid(p,spot.row,spot.col) && ChessBoard[spot.row, spot.col] == null) || ChessBoard[spot.row, spot.col].IsWhite != p.IsWhite)
                             {
                                 que.Enqueue((spot));
                             }
                         }
 
-                        (int row, int col)[] moves = new (int row, int col)[que.Count];
+                        (int row, int col)[] moves = new (int row, int col)[que.Count + 1];
                         for (int i = que.Count; i > 0; i--)
                         {
-                            moves[i] = que.Dequeue();
+                            if (que.Peek().row < 8 || que.Peek().col < 8)
+                            {
+                                moves[i] = que.Dequeue();
+                            }
+                            else
+                            {
+                                que.Dequeue();
+                            }
                         }
                         return moves;
                     }
@@ -515,7 +741,7 @@ namespace Chess
 
             }
             return null;
-        }       
+        }
 
         /// <summary>
         /// Checks to see if Piece is already on board
@@ -523,25 +749,33 @@ namespace Chess
         /// <returns>True if valid, false if not.</returns>
         private bool IsValid(Piece p, int row, int col)
         {
-            if (row < _boardLength && col < _boardLength)
+            try
             {
-                if (ChessBoard[row, col] != null)
+                if (row < _boardLength && col < _boardLength)
                 {
-                    if (((p.IsWhite && ChessBoard[row, col].IsWhite) || !p.IsWhite && !ChessBoard[row, col].IsWhite)
-                        && ChessBoard[row, col] == p)
+                    if (ChessBoard[row, col] != null)
                     {
-                        return false;
+                        if (((p.IsWhite && ChessBoard[row, col].IsWhite) || !p.IsWhite && !ChessBoard[row, col].IsWhite)
+                            && ChessBoard[row, col] == p)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
-                    else
-                    {
-                        return true;
-                    }
-                }
 
-                return true;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch
             {
+
                 return false;
             }
         }
