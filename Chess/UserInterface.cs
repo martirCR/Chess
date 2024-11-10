@@ -34,11 +34,11 @@ namespace Chess
         private Image _pawnBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackPawn.png");
 
         private Image _kingBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackKing.png");
-        
+
         private Image _knightBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackKnight.png");
-        
+
         private Image _bishopBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackBishop.png");
-        
+
         private Image _queenBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackQueen.png");
 
         private Image _rookBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackRook.png");
@@ -186,13 +186,13 @@ namespace Chess
 
                         //l.Text = p.Rank.ToString();
                         PlaceImages(l, p);
-                        
+
                         //l.Text = l.Name;
 
 
                         _waaah.Add(l, p);
-                        
-                        
+
+
                         /* if (p.Rank == 1)
                          {
                              Graphics g = 
@@ -202,7 +202,7 @@ namespace Chess
                         //}
                     }
 
-                    
+
                     if (isWhite)
                     {
                         l.BackColor = Color.White;
@@ -214,7 +214,7 @@ namespace Chess
                     l.BorderStyle = BorderStyle.FixedSingle;
                     l.Margin = Padding.Empty;
                     l.Click += ChessBoard;
-             
+
                     uxChessBoard.Controls.Add(l);
                     // isWhite = !isWhite;
                 }
@@ -232,7 +232,7 @@ namespace Chess
             _board.SetPieces();
             uxTurnColor.Text = "White";
 
-           
+
             MakeBoard();
 
         }
@@ -284,17 +284,17 @@ namespace Chess
                 {
                     if ((validMoves[i] == (currentRow, currentCol)))
                     {*/
-                        _board.ChessBoard[row, col] = null; // Needs MOve method.
+                _board.ChessBoard[row, col] = null; // Needs MOve method.
 
-                        _board.ChessBoard[currentRow, currentCol] = p;
-                        p.Position = (currentRow, currentCol);
-                        //p.Start = false;
-/*
-                    }
-                }*/
+                _board.ChessBoard[currentRow, currentCol] = p;
+                p.Position = (currentRow, currentCol);
+                //p.Start = false;
+                /*
+                                    }
+                                }*/
 
 
-                    p.Position = (currentRow, currentCol);
+                p.Position = (currentRow, currentCol);
 
 
 
@@ -335,10 +335,18 @@ namespace Chess
             {
                 DefaultLabel(l);
             }
-
-
-
-            _currentSelected = l;
+            string coordinates = l.Name;
+            int currentRow = Convert.ToInt32(coordinates[0] - '0');
+            int currentCol = Convert.ToInt32(coordinates[1] - '0');
+            if ((_whiteTurn && !_board.ChessBoard[currentRow, currentCol].IsWhite) ||
+                (!_whiteTurn && _board.ChessBoard[currentRow, currentCol].IsWhite))
+            {
+                DefaultLabel(l);
+            }
+            else
+            {
+                _currentSelected = l;
+            }
         }
     }
 
