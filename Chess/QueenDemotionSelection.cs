@@ -16,5 +16,20 @@ namespace Chess
         {
             InitializeComponent();
         }
+
+        private void uxBishop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void uxRook_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void uxKnight_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

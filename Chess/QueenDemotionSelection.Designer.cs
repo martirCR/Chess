@@ -43,6 +43,7 @@
             uxBishop.TabIndex = 0;
             uxBishop.Text = "Bishop";
             uxBishop.UseVisualStyleBackColor = true;
+            uxBishop.Click += uxBishop_Click;
             // 
             // uxKnight
             // 
@@ -52,6 +53,7 @@
             uxKnight.TabIndex = 1;
             uxKnight.Text = "Knight";
             uxKnight.UseVisualStyleBackColor = true;
+            uxKnight.Click += uxKnight_Click;
             // 
             // uxRook
             // 
@@ -61,6 +63,7 @@
             uxRook.TabIndex = 2;
             uxRook.Text = "Rook";
             uxRook.UseVisualStyleBackColor = true;
+            uxRook.Click += uxRook_Click;
             // 
             // uxDemotionLabel
             // 
