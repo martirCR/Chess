@@ -32,6 +32,7 @@
             uxTurnColor = new System.Windows.Forms.Label();
             uxNew = new System.Windows.Forms.Button();
             uxTurn = new System.Windows.Forms.Label();
+            uxEndTurn = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // uxChessBoard
@@ -71,12 +72,22 @@
             uxTurn.TabIndex = 2;
             uxTurn.Text = "Turn";
             // 
+            // uxEndTurn
+            // 
+            uxEndTurn.Location = new System.Drawing.Point(127, 15);
+            uxEndTurn.Name = "uxEndTurn";
+            uxEndTurn.Size = new System.Drawing.Size(112, 52);
+            uxEndTurn.TabIndex = 3;
+            uxEndTurn.Text = "End Turn";
+            uxEndTurn.UseVisualStyleBackColor = true;
+            // 
             // UserInterface
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new System.Drawing.Size(1027, 1126);
+            Controls.Add(uxEndTurn);
             Controls.Add(uxTurn);
             Controls.Add(uxNew);
             Controls.Add(uxTurnColor);
@@ -94,6 +105,7 @@
         private System.Windows.Forms.Label uxTurnColor;
         private System.Windows.Forms.Button uxNew;
         private System.Windows.Forms.Label uxTurn;
+        private System.Windows.Forms.Button uxEndTurn;
     }
 }
 
