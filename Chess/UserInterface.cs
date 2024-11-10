@@ -29,9 +29,115 @@ namespace Chess
 
         private Dictionary<Label, Piece> _waaah = new Dictionary<Label, Piece>();
 
+        private Image _pawnBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackPawn.png");
+
+        private Image _kingBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackKing.png");
+        
+        private Image _knightBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackKnight.png");
+        
+        private Image _bishopBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackBishop.png");
+        
+        private Image _queenBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackQueen.png");
+
+        private Image _rookBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackRook.png");
+
+        private Image _pawnWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whitePawn.png");
+
+        private Image _bishopWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteBishop.png");
+
+        private Image _kingWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteKing.png");
+
+        private Image _knightWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteKnight.png");
+
+        private Image _queenWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteQueen.png");
+
+        private Image _rookWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteRook.png");
+
+
         public UserInterface()
         {
             InitializeComponent();
+        }
+
+        private void PlaceImages(Label l, Piece p)
+        {
+            switch (p.Rank)
+            {
+                case 0:
+                    {
+                        if (p.IsWhite)
+                        {
+                            l.Image = new Bitmap(_pawnWhiteImage, l.Size);
+
+
+                        }
+                        else
+                        {
+                            l.Image = new Bitmap(_pawnBlackImage, l.Size);
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        if (p.IsWhite)
+                        {
+                            l.Image = new Bitmap(_bishopWhiteImage, l.Size);
+                        }
+                        else
+                        {
+                            l.Image = new Bitmap(_bishopBlackImage, l.Size);
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        if (p.IsWhite)
+                        {
+                            l.Image = new Bitmap(_knightWhiteImage, l.Size);
+                        }
+                        else
+                        {
+                            l.Image = new Bitmap(_knightBlackImage, l.Size);
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        if (p.IsWhite)
+                        {
+                            l.Image = new Bitmap(_rookWhiteImage, l.Size);
+                        }
+                        else
+                        {
+                            l.Image = new Bitmap(_rookBlackImage, l.Size);
+                        }
+                        break;
+                    }
+                case 4:
+                    {
+                        if (p.IsWhite)
+                        {
+                            l.Image = new Bitmap(_queenWhiteImage, l.Size);
+                        }
+                        else
+                        {
+                            l.Image = new Bitmap(_queenBlackImage, l.Size);
+                        }
+                        break;
+                    }
+                case 5:
+                    {
+                        if (p.IsWhite)
+                        {
+                            l.Image = new Bitmap(_kingWhiteImage, l.Size);
+                        }
+                        else
+                        {
+                            l.Image = new Bitmap(_kingBlackImage, l.Size);
+                        }
+                        break;
+                    }
+            }
         }
 
         private void MakeBoard()
@@ -68,13 +174,17 @@ namespace Chess
                     }
                     Label l = new Label();
                     l.Name = i.ToString() + j.ToString();
+                    l.Width = uxChessBoard.Width / _boardLength;
+                    l.Height = uxChessBoard.Height / _boardLength;
                     if (_board.ChessBoard[i, j] != null)
                     {
                         Piece p = _board.ChessBoard[i, j];
                         l.Font = new Font(FontFamily.GenericMonospace.ToString(), 16);
                         l.TextAlign = ContentAlignment.MiddleCenter;
 
-                        l.Text = p.Rank.ToString();
+                        //l.Text = p.Rank.ToString();
+                        PlaceImages(l, p);
+                        
                         //l.Text = l.Name;
 
 
@@ -89,8 +199,7 @@ namespace Chess
                          {*/
                         //}
                     }
-                    l.Width = uxChessBoard.Width / _boardLength;
-                    l.Height = uxChessBoard.Height / _boardLength;
+                    
                     if (isWhite)
                     {
                         l.BackColor = Color.White;
@@ -152,7 +261,7 @@ namespace Chess
                 _waaah.Remove(prevSelected);
                 int row = p.Position.row;
                 int col = p.Position.col;
-                (int row, int col)[] validMoves = _board.ValidMove(p);
+                //(int row, int col)[] validMoves = _board.ValidMove(p);
 
 
                 string coordinates = currentSelected.Name;
@@ -160,18 +269,18 @@ namespace Chess
                 int currentRow = Convert.ToInt32(coordinates[0] - '0');
                 int currentCol = Convert.ToInt32(coordinates[1] - '0');
 
-                for (int i = 0; i < validMoves.Length; i++)
+                /*for (int i = 0; i < validMoves.Length; i++)
                 {
                     if ((validMoves[i] == (currentRow, currentCol)))
-                    {
+                    {*/
                         _board.ChessBoard[row, col] = null; // Needs MOve method.
 
                         _board.ChessBoard[currentRow, currentCol] = p;
                         p.Position = (currentRow, currentCol);
-                        p.Start = false;
-
+                        //p.Start = false;
+/*
                     }
-                }
+                }*/
 
 
                     p.Position = (currentRow, currentCol);
