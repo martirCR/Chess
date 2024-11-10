@@ -152,14 +152,31 @@ namespace Chess
                 _waaah.Remove(prevSelected);
                 int row = p.Position.row;
                 int col = p.Position.col;
+                (int row, int col)[] validMoves = _board.ValidMove(p);
+
+
                 string coordinates = currentSelected.Name;
 
-                p.Position = (Convert.ToInt32(coordinates[0] - '0'), Convert.ToInt32(coordinates[1] - '0'));
+                int currentRow = Convert.ToInt32(coordinates[0] - '0');
+                int currentCol = Convert.ToInt32(coordinates[1] - '0');
 
-                _board.ChessBoard[row, col] = null; // Needs MOve method.
+                for (int i = 0; i < validMoves.Length; i++)
+                {
+                    if ((validMoves[i] == (currentRow, currentCol)))
+                    {
+                        _board.ChessBoard[row, col] = null; // Needs MOve method.
+
+                        _board.ChessBoard[currentRow, currentCol] = p;
+                        p.Position = (currentRow, currentCol);
+                        p.Start = false;
+
+                    }
+                }
 
 
-                _board.ChessBoard[Convert.ToInt32(coordinates[0] - '0'), Convert.ToInt32(coordinates[1] - '0')] = p;
+                    p.Position = (currentRow, currentCol);
+
+
 
                 //_waaah.Add(currentSelected, p);
 
