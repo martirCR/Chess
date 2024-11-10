@@ -31,29 +31,29 @@ namespace Chess
 
         private bool _whiteTurn = true;
 
-        private Image _pawnBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackPawn.png");
+        private Image _pawnBlackImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\blackPawn.png");
 
-        private Image _kingBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackKing.png");
+        private Image _kingBlackImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\blackKing.png");
 
-        private Image _knightBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackKnight.png");
+        private Image _knightBlackImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\blackKnight.png");
 
-        private Image _bishopBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackBishop.png");
+        private Image _bishopBlackImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\blackBishop.png");
 
-        private Image _queenBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackQueen.png");
+        private Image _queenBlackImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\blackQueen.png");
 
-        private Image _rookBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackRook.png");
+        private Image _rookBlackImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\blackRook.png");
 
-        private Image _pawnWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whitePawn.png");
+        private Image _pawnWhiteImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\whitePawn.png");
 
-        private Image _bishopWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteBishop.png");
+        private Image _bishopWhiteImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\whiteBishop.png");
 
-        private Image _kingWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteKing.png");
+        private Image _kingWhiteImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\whiteKing.png");
 
-        private Image _knightWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteKnight.png");
+        private Image _knightWhiteImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\whiteKnight.png");
 
-        private Image _queenWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteQueen.png");
+        private Image _queenWhiteImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\whiteQueen.png");
 
-        private Image _rookWhiteImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\whiteRook.png");
+        private Image _rookWhiteImage = Image.FromFile(@"..\..\..\Chess Pieces pngs\whiteRook.png");
 
 
         public UserInterface()
