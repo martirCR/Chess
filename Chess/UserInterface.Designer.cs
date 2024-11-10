@@ -28,45 +28,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.uxChessBoard = new System.Windows.Forms.FlowLayoutPanel();
-            this.uxTurnLabel = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            uxChessBoard = new System.Windows.Forms.FlowLayoutPanel();
+            uxTurnColor = new System.Windows.Forms.Label();
+            uxNew = new System.Windows.Forms.Button();
+            uxTurn = new System.Windows.Forms.Label();
+            SuspendLayout();
             // 
             // uxChessBoard
             // 
-            this.uxChessBoard.Location = new System.Drawing.Point(0, 95);
-            this.uxChessBoard.Name = "uxChessBoard";
-            this.uxChessBoard.Size = new System.Drawing.Size(800, 354);
-            this.uxChessBoard.TabIndex = 0;
+            uxChessBoard.Location = new System.Drawing.Point(13, 88);
+            uxChessBoard.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            uxChessBoard.Name = "uxChessBoard";
+            uxChessBoard.Size = new System.Drawing.Size(1000, 1000);
+            uxChessBoard.TabIndex = 0;
             // 
-            // uxTurnLabel
+            // uxTurnColor
             // 
-            this.uxTurnLabel.AutoSize = true;
-            this.uxTurnLabel.Location = new System.Drawing.Point(610, 34);
-            this.uxTurnLabel.Name = "uxTurnLabel";
-            this.uxTurnLabel.Size = new System.Drawing.Size(50, 20);
-            this.uxTurnLabel.TabIndex = 0;
-            this.uxTurnLabel.Text = "White";
+            uxTurnColor.AutoSize = true;
+            uxTurnColor.Location = new System.Drawing.Point(711, 15);
+            uxTurnColor.Name = "uxTurnColor";
+            uxTurnColor.Size = new System.Drawing.Size(58, 25);
+            uxTurnColor.TabIndex = 0;
+            uxTurnColor.Text = "White";
+            // 
+            // uxNew
+            // 
+            uxNew.Location = new System.Drawing.Point(13, 15);
+            uxNew.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            uxNew.Name = "uxNew";
+            uxNew.Size = new System.Drawing.Size(108, 52);
+            uxNew.TabIndex = 1;
+            uxNew.Text = "New Game";
+            uxNew.UseVisualStyleBackColor = true;
+            uxNew.Click += NewClick;
+            // 
+            // uxTurn
+            // 
+            uxTurn.AutoSize = true;
+            uxTurn.Location = new System.Drawing.Point(648, 15);
+            uxTurn.Name = "uxTurn";
+            uxTurn.Size = new System.Drawing.Size(47, 25);
+            uxTurn.TabIndex = 2;
+            uxTurn.Text = "Turn";
             // 
             // UserInterface
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.uxTurnLabel);
-            this.Controls.Add(this.uxChessBoard);
-            this.Name = "UserInterface";
-            this.Text = "Chess Board";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(1027, 1126);
+            Controls.Add(uxTurn);
+            Controls.Add(uxNew);
+            Controls.Add(uxTurnColor);
+            Controls.Add(uxChessBoard);
+            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            Name = "UserInterface";
+            Text = "Chess Board";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel uxChessBoard;
-        private System.Windows.Forms.Label uxTurnLabel;
+        private System.Windows.Forms.Label uxTurnColor;
+        private System.Windows.Forms.Button uxNew;
+        private System.Windows.Forms.Label uxTurn;
     }
 }
 
