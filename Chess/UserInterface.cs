@@ -29,6 +29,8 @@ namespace Chess
 
         private Dictionary<Label, Piece> _waaah = new Dictionary<Label, Piece>();
 
+        private bool _whiteTurn = true;
+
         private Image _pawnBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackPawn.png");
 
         private Image _kingBlackImage = Image.FromFile(@"C:\Users\odoro\source\repos\Chess\Chess\Chess Pieces pngs\blackKing.png");
@@ -258,6 +260,16 @@ namespace Chess
             Piece p;
             if (_waaah.TryGetValue(prevSelected, out p))
             {
+                if (_whiteTurn)
+                {
+                    uxTurnColor.Text = "Black";
+                    _whiteTurn = false;
+                }
+                else
+                {
+                    uxTurnColor.Text = "White";
+                    _whiteTurn = true;
+                }
                 _waaah.Remove(prevSelected);
                 int row = p.Position.row;
                 int col = p.Position.col;
