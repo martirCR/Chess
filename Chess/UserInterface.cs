@@ -6,6 +6,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 //using System.Threading.Tasks;
@@ -24,23 +25,16 @@ namespace Chess
         private PiecePainter _piecePainter = new PiecePainter();
 
         private Label _currentSelected;
+
+        private Dictionary<Label, Piece> _waaah = new Dictionary<Label, Piece>();
+
         public UserInterface()
         {
             InitializeComponent();
         }
 
-
-
-        /// <summary>
-        /// Handles the New Game Clicke event
-        /// </summary>
-        /// <param name="sender">The object signaling the event</param>
-        /// <param name="e">Info on the event</param>
-        private void NewClick(object sender, EventArgs e)
+        private void MakeBoard()
         {
-            //uxTurnColor.Text = "White";
-            _board.SetPieces();
-
             bool isWhite = false;
             for (int i = 0; i < _boardLength; i++)
             {
@@ -72,6 +66,7 @@ namespace Chess
                     if (_board.ChessBoard[i, j] != null)
                     {
                         Piece p = _board.ChessBoard[i, j];
+                        _waaah.Add(l, p);
                         /* if (p.Rank == 1)
                          {
                              Graphics g = 
@@ -103,6 +98,20 @@ namespace Chess
         }
 
         /// <summary>
+        /// Handles the New Game Clicke event
+        /// </summary>
+        /// <param name="sender">The object signaling the event</param>
+        /// <param name="e">Info on the event</param>
+        private void NewClick(object sender, EventArgs e)
+        {
+            //uxTurnColor.Text = "White";
+            _board.SetPieces();
+
+            MakeBoard();
+
+        }
+
+        /// <summary>
         /// Sets a label back to the default Label
         /// </summary>
         /// <param name="l">The label being set to default</param>
@@ -119,6 +128,22 @@ namespace Chess
             l.BorderStyle = BorderStyle.FixedSingle;
         }
 
+        private void MovePiece(Label l)
+        {
+            Piece p;
+            if (_waaah.TryGetValue(l, out p))
+            {
+                int row = p.Position.row;
+                int col = p.Position.col;
+
+                _board.ChessBoard[row, col] = null; // Needs MOve method.
+                _board.ChessBoard[row + 1, col] = p;
+
+                MakeBoard();
+            }
+        }
+
+
         /// <summary>
         /// Changes colors of selected space
         /// </summary>
@@ -129,6 +154,8 @@ namespace Chess
             if (_currentSelected != null)
             {
                 DefaultLabel(_currentSelected);
+                MovePiece(_currentSelected);
+
             }
             Label l = (Label)sender;
 
@@ -146,6 +173,8 @@ namespace Chess
             {
                 DefaultLabel(l);
             }
+
+
 
             _currentSelected = l;
         }
