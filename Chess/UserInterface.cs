@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 //using System.Threading.Tasks;
@@ -36,6 +37,9 @@ namespace Chess
         private void MakeBoard()
         {
             bool isWhite = false;
+            _waaah.Clear();
+            uxChessBoard.Controls.Clear();
+
             for (int i = 0; i < _boardLength; i++)
             {
                 for (int j = 0; j < _boardLength; j++)
@@ -63,17 +67,26 @@ namespace Chess
                         }
                     }
                     Label l = new Label();
+                    l.Name = i.ToString() + j.ToString();
                     if (_board.ChessBoard[i, j] != null)
                     {
                         Piece p = _board.ChessBoard[i, j];
+                        l.Font = new Font(FontFamily.GenericMonospace.ToString(), 16);
+                        l.TextAlign = ContentAlignment.MiddleCenter;
+
+                        l.Text = p.Rank.ToString();
+                        //l.Text = l.Name;
+
+
                         _waaah.Add(l, p);
+                        
+                        
                         /* if (p.Rank == 1)
                          {
                              Graphics g = 
                          }
                          else
                          {*/
-                        l.Text = p.Rank.ToString();
                         //}
                     }
                     l.Width = uxChessBoard.Width / _boardLength;
@@ -88,13 +101,13 @@ namespace Chess
                     }
                     l.BorderStyle = BorderStyle.FixedSingle;
                     l.Margin = Padding.Empty;
-                    l.TextAlign = ContentAlignment.MiddleCenter;
-                    l.Font = new Font(FontFamily.GenericMonospace.ToString(), 16);
                     l.Click += ChessBoard;
+             
                     uxChessBoard.Controls.Add(l);
                     // isWhite = !isWhite;
                 }
             }
+            Invalidate();
         }
 
         /// <summary>
@@ -107,6 +120,9 @@ namespace Chess
             //uxTurnColor.Text = "White";
             _board.SetPieces();
 
+            bool isWhite = false;
+
+           
             MakeBoard();
 
         }
@@ -128,16 +144,24 @@ namespace Chess
             l.BorderStyle = BorderStyle.FixedSingle;
         }
 
-        private void MovePiece(Label l)
+        private void MovePiece(Label prevSelected, Label currentSelected)
         {
             Piece p;
-            if (_waaah.TryGetValue(l, out p))
+            if (_waaah.TryGetValue(prevSelected, out p))
             {
+                _waaah.Remove(prevSelected);
                 int row = p.Position.row;
                 int col = p.Position.col;
+                string coordinates = currentSelected.Name;
+
+                p.Position = (Convert.ToInt32(coordinates[0] - '0'), Convert.ToInt32(coordinates[1] - '0'));
 
                 _board.ChessBoard[row, col] = null; // Needs MOve method.
-                _board.ChessBoard[row + 1, col] = p;
+
+
+                _board.ChessBoard[Convert.ToInt32(coordinates[0] - '0'), Convert.ToInt32(coordinates[1] - '0')] = p;
+
+                //_waaah.Add(currentSelected, p);
 
                 MakeBoard();
             }
@@ -151,13 +175,14 @@ namespace Chess
         /// <param name="e">Info on the event</param>
         private void ChessBoard(object sender, EventArgs e)
         {
+            Label l = (Label)sender;
+
             if (_currentSelected != null)
             {
                 DefaultLabel(_currentSelected);
-                MovePiece(_currentSelected);
+                MovePiece(_currentSelected, l);
 
             }
-            Label l = (Label)sender;
 
             if (l.BackColor == Color.White)
             {
