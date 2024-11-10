@@ -144,18 +144,24 @@ namespace Chess
             l.BorderStyle = BorderStyle.FixedSingle;
         }
 
-        private void MovePiece(Label l)
+        private void MovePiece(Label prevSelected, Label currentSelected)
         {
             Piece p;
-            if (_waaah.TryGetValue(l, out p))
+            if (_waaah.TryGetValue(prevSelected, out p))
             {
+                _waaah.Remove(prevSelected);
                 int row = p.Position.row;
                 int col = p.Position.col;
+                string coordinates = currentSelected.Name;
 
-                p.Position = (row + 1, col);
+                p.Position = (Convert.ToInt32(coordinates[0] - '0'), Convert.ToInt32(coordinates[1] - '0'));
 
                 _board.ChessBoard[row, col] = null; // Needs MOve method.
-                _board.ChessBoard[row + 1, col] = p;
+
+
+                _board.ChessBoard[Convert.ToInt32(coordinates[0] - '0'), Convert.ToInt32(coordinates[1] - '0')] = p;
+
+                //_waaah.Add(currentSelected, p);
 
                 MakeBoard();
             }
@@ -174,7 +180,7 @@ namespace Chess
             if (_currentSelected != null)
             {
                 DefaultLabel(_currentSelected);
-                MovePiece(_currentSelected);
+                MovePiece(_currentSelected, l);
 
             }
 
