@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Chess
 {
@@ -80,41 +79,154 @@ namespace Chess
 
 
         /// <summary>
-        /// Moves pece
+        /// if move is valid updates piece position and the chessboard index with said position
         /// </summary>
-        public void MovePiece(Piece p)
-        { 
+        public void MovePiece((int row, int col) move, (int row, int col)[] possible, Piece p)
+        {
+            if (IsValid(p, move.row, move.col))
+            {
 
+                if (ChessBoard[move.row, move.col] == null)// if the space is empty
+                {
+                    p.Position = (move.row, move.col);
+                    ChessBoard[move.row, move.col] = p;
+                    return;
+                }
+                if (ChessBoard[move.row, move.col].IsWhite != p.IsWhite)//if it is a opposite color
+                {
+                    p.Position = (move.row, move.col);
+                    ChessBoard[move.row, move.col] = p;
+                    return;
+                }
+            }
+            return;
+        }
+        /// <summary>
+        /// search for move returns true if found and if found the out parameter is the index
+        /// </summary>
+        /// <param name="move"></param>
+        /// <param name="possible"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private bool MoveSearch((int row, int col) move, (int row, int col)[] possible, out int? index)
+        {
+            for (int i = 0; i < possible.Length; i++)
+            {
+                if (possible[i] == move)
+                {
+                    index = i;
+                    return true;
+                }
+            }
+            index = null;
+            return false;
         }
 
 
+
+        /// <summary>
+        /// checks valid moves for the piece
+        /// </summary>
+        /// <param name="p">the pieceparam>
+        /// <returns>an array of valid moves the piece can make</returns>
         public (int row, int col)[] ValidMove(Piece p)
         {
 
             switch (p.Rank)
             {
-                case _pawn: // pawn
+                case _pawn: // pawn 
                     {
                         (int row, int col)[] moves = new (int row, int col)[3];
-                        if (p.Start)
-                        {
-                            moves[0] = (p.Position.row + 2, p.Position.col);
+                        Queue<(int row, int col)> que = new Queue<(int row, int col)>();
+                        if (p.Start)//double jump check
+                        {                            
+                            if (ChessBoard[p.Position.row + 2, p.Position.col] == null && ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
+                            {
+                                que.Enqueue((p.Position.row + 2, p.Position.col));
+                            }                                                        
                         }
-                        moves[1] = (p.Position.row + 1, p.Position.col);
-                        moves[2] = (p.Position.row + 1, p.Position.col - 1);
-                        moves[3] = (p.Position.row + 1, p.Position.col + 1);
+                        //single jump check
+                        if (ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
+                        {
+                            que.Enqueue((p.Position.row + 2, p.Position.col));
+                        }                        
+                        //steal left check                        
+                        if (ChessBoard[p.Position.row + 1, p.Position.col - 1].IsWhite != p.IsWhite)//if it is a opposite color
+                        {
+                            que.Enqueue((p.Position.row + 2, p.Position.col));
+                        }
+                        //steal right check                        
+                        if (ChessBoard[p.Position.row + 1, p.Position.col + 1].IsWhite != p.IsWhite)//if it is a opposite color
+                        {
+                            que.Enqueue((p.Position.row + 2, p.Position.col));
+                        }
+                        for (int i = que.Count; i > 0; i--)
+                        {
+                            moves[i] = que.Dequeue();
+                        }
                         return moves;
+                        
                     }
                 case _bishop: // bishop
                     {
 
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
+                        bool ur = true;//up right
+                        bool ul = true;//up left
+                        bool dr = true;// down right
+                        bool dl = true;// down left
                         for (int i = 1; i < 8; i++)// 8 is the maximum number of spaces a piece can move
-                        {
-                            que.Enqueue((p.Position.row + i, p.Position.col + i));
-                            que.Enqueue((p.Position.row + i, p.Position.col - i));
-                            que.Enqueue((p.Position.row - i, p.Position.col + i));
-                            que.Enqueue((p.Position.row - i, p.Position.col - i));
+                        {   
+                            //each while stops when it encounter a piece and if it is the opposite color it adds to the queue
+                            //up right
+                            while (ur)
+                            {
+                                if ((ChessBoard[p.Position.row + i, p.Position.col + i].IsWhite != p.IsWhite || ChessBoard[p.Position.row + i, p.Position.col + i] == null))
+                                {
+                                    que.Enqueue((p.Position.row + i, p.Position.col + i));
+                                }
+                                else
+                                {
+                                    ur = false;
+                                }                                
+                            }
+                            //up left
+                            while (ul)
+                            {
+                                if ((ChessBoard[p.Position.row + i, p.Position.col - i].IsWhite != p.IsWhite || ChessBoard[p.Position.row + i, p.Position.col - i] == null))
+                                {
+                                    que.Enqueue((p.Position.row + i, p.Position.col - i));
+                                }
+                                else
+                                {
+                                    ul = false;
+                                }
+                            }
+                            //down right
+                            while (dr)
+                            {
+                                if ((ChessBoard[p.Position.row - i, p.Position.col + i].IsWhite != p.IsWhite || ChessBoard[p.Position.row - i, p.Position.col + i] == null))
+                                {
+                                    que.Enqueue((p.Position.row - i, p.Position.col + i));
+                                }
+                                else
+                                {
+                                    dr = false;
+                                }
+                            }
+                            //down left
+                            while (dl)
+                            {
+                                if ((ChessBoard[p.Position.row - i, p.Position.col - i].IsWhite != p.IsWhite || ChessBoard[p.Position.row - i, p.Position.col - i] == null))
+                                {
+                                    que.Enqueue((p.Position.row - i, p.Position.col - i));
+                                }
+                                else
+                                {
+                                    dl = false;
+                                }
+                            }                          
+                            
                         }
                         (int row, int col)[] moves = new (int row, int col)[que.Count];
                         for (int i = que.Count; i > 0; i--)
@@ -222,7 +334,7 @@ namespace Chess
             {
                 if (ChessBoard[row, col] != null)
                 {
-                    if (((p.IsWhite && ChessBoard[row, col].IsWhite) || !p.IsWhite && !ChessBoard[row,col].IsWhite) 
+                    if (((p.IsWhite && ChessBoard[row, col].IsWhite) || !p.IsWhite && !ChessBoard[row, col].IsWhite)
                         && ChessBoard[row, col] == p)
                     {
                         return false;
