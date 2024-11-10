@@ -32,7 +32,6 @@
             uxTurnColor = new System.Windows.Forms.Label();
             uxNew = new System.Windows.Forms.Button();
             uxTurn = new System.Windows.Forms.Label();
-            uxEndTurn = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // uxChessBoard
@@ -46,9 +45,11 @@
             // uxTurnColor
             // 
             uxTurnColor.AutoSize = true;
-            uxTurnColor.Location = new System.Drawing.Point(711, 15);
+            uxTurnColor.BackColor = System.Drawing.SystemColors.Control;
+            uxTurnColor.Font = new System.Drawing.Font("Segoe UI", 20F);
+            uxTurnColor.Location = new System.Drawing.Point(736, 15);
             uxTurnColor.Name = "uxTurnColor";
-            uxTurnColor.Size = new System.Drawing.Size(58, 25);
+            uxTurnColor.Size = new System.Drawing.Size(128, 54);
             uxTurnColor.TabIndex = 0;
             uxTurnColor.Text = "White";
             // 
@@ -66,20 +67,12 @@
             // uxTurn
             // 
             uxTurn.AutoSize = true;
-            uxTurn.Location = new System.Drawing.Point(648, 15);
+            uxTurn.Font = new System.Drawing.Font("Segoe UI", 20F);
+            uxTurn.Location = new System.Drawing.Point(626, 15);
             uxTurn.Name = "uxTurn";
-            uxTurn.Size = new System.Drawing.Size(47, 25);
+            uxTurn.Size = new System.Drawing.Size(104, 54);
             uxTurn.TabIndex = 2;
             uxTurn.Text = "Turn";
-            // 
-            // uxEndTurn
-            // 
-            uxEndTurn.Location = new System.Drawing.Point(127, 15);
-            uxEndTurn.Name = "uxEndTurn";
-            uxEndTurn.Size = new System.Drawing.Size(112, 52);
-            uxEndTurn.TabIndex = 3;
-            uxEndTurn.Text = "End Turn";
-            uxEndTurn.UseVisualStyleBackColor = true;
             // 
             // UserInterface
             // 
@@ -87,7 +80,6 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new System.Drawing.Size(1027, 1126);
-            Controls.Add(uxEndTurn);
             Controls.Add(uxTurn);
             Controls.Add(uxNew);
             Controls.Add(uxTurnColor);
@@ -105,7 +97,6 @@
         private System.Windows.Forms.Label uxTurnColor;
         private System.Windows.Forms.Button uxNew;
         private System.Windows.Forms.Label uxTurn;
-        private System.Windows.Forms.Button uxEndTurn;
     }
 }
 
