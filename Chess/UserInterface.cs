@@ -201,6 +201,7 @@ namespace Chess
                          {*/
                         //}
                     }
+
                     
                     if (isWhite)
                     {
@@ -228,10 +229,8 @@ namespace Chess
         /// <param name="e">Info on the event</param>
         private void NewClick(object sender, EventArgs e)
         {
-            //uxTurnColor.Text = "White";
             _board.SetPieces();
-
-            bool isWhite = false;
+            uxTurnColor.Text = "White";
 
            
             MakeBoard();

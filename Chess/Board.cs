@@ -73,6 +73,13 @@ namespace Chess
         {
             SetSpecialPieces(true);
             SetPawns(true);
+            for(int i = 2; i < _boardLength - 2; i++)
+            {
+                for(int j = 0; j < _boardLength; j++)
+                {
+                    ChessBoard[i, j] = null;
+                }
+            }
             SetSpecialPieces(false);
             SetPawns(false);
         }
