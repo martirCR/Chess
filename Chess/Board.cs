@@ -140,7 +140,7 @@ namespace Chess
                         Queue<(int row, int col)> que = new Queue<(int row, int col)>();
                         if (p.Start)//double jump check
                         {
-                            if (ChessBoard[p.Position.row + 2, p.Position.col] == null && ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
+                            if (!p.IsWhite && ChessBoard[p.Position.row + 2, p.Position.col] == null && ChessBoard[p.Position.row + 1, p.Position.col] == null)// if the space is empty
                             {
                                 que.Enqueue((p.Position.row + 2, p.Position.col));
                             }
