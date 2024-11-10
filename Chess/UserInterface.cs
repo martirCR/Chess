@@ -338,14 +338,21 @@ namespace Chess
             string coordinates = l.Name;
             int currentRow = Convert.ToInt32(coordinates[0] - '0');
             int currentCol = Convert.ToInt32(coordinates[1] - '0');
-            if ((_whiteTurn && !_board.ChessBoard[currentRow, currentCol].IsWhite) ||
-                (!_whiteTurn && _board.ChessBoard[currentRow, currentCol].IsWhite))
+            try
+            {
+                if ((_whiteTurn && !_board.ChessBoard[currentRow, currentCol].IsWhite) ||
+                    (!_whiteTurn && _board.ChessBoard[currentRow, currentCol].IsWhite))
+                {
+                    DefaultLabel(l);
+                }
+                else
+                {
+                    _currentSelected = l;
+                }
+            }
+            catch
             {
                 DefaultLabel(l);
-            }
-            else
-            {
-                _currentSelected = l;
             }
         }
     }
